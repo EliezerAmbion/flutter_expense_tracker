@@ -11,8 +11,28 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.teal),
-      title: 'Flutter App',
+      theme: ThemeData(
+        primarySwatch: Colors.teal,
+        accentColor: Colors.amber, // btns will use the accentColor
+        fontFamily: 'Quicksand',
+        // theme for everything else
+        textTheme: ThemeData.light().textTheme.copyWith(
+              headline6: const TextStyle(
+                fontFamily: 'OpenSans',
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+        // theme for the appbar
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontFamily: 'OpenSans',
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      title: 'Expense Tracker',
       home: MyHomePage(),
     );
   }
@@ -59,6 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
       context: ctx,
       builder: (_) {
         return GestureDetector(
+          // onTap and HitTestBehavior.opaque are used to cancel the behaviour of closing the modal when you tap it.
           onTap: () {},
           behavior: HitTestBehavior.opaque,
           child: NewTransaction(addTx: _addNewTransaction),
@@ -85,10 +106,13 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Container(
               width: double.infinity,
-              child: const Card(
-                color: Colors.teal,
+              child: Card(
+                color: Theme.of(context).primaryColor,
                 elevation: 5,
-                child: Text('CHART!'),
+                child: const Text(
+                  'CHART!',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
             TransactionList(transactions: _userTransactions),
