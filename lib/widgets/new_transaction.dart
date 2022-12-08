@@ -60,7 +60,7 @@ class _NewTransactionState extends State<NewTransaction> {
               controller: titleController,
               // you can add (_) => submitData() to add data on the press of the check in the keyboard
               // notice that it has a parenthesis ()
-              // NOTE: you commented it out because you don't want that behaviour
+              // NOTE: you commented it (below code) because you don't want that behaviour
               // onSubmitted: (_) => submitData(),
             ),
             TextField(
@@ -84,8 +84,30 @@ class _NewTransactionState extends State<NewTransaction> {
               // NOTE: you commented it out because you don't want that behaviour
               // onSubmitted: (_) => submitData(),
             ),
-            TextButton(
-              style: TextButton.styleFrom(foregroundColor: Colors.deepPurple),
+            Container(
+              height: 70,
+              child: Row(
+                children: [
+                  const Text('No Date Chosen!'),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      foregroundColor: Theme.of(context).primaryColor,
+                    ),
+                    onPressed: () {},
+                    child: const Text(
+                      'Choose Date',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            ElevatedButton(
+              style: TextButton.styleFrom(
+                foregroundColor: Theme.of(context).textTheme.button!.color,
+              ),
               // this submitData has no parenthesis, study why
               onPressed: submitData,
               child: const Text('Add Transaction'),
