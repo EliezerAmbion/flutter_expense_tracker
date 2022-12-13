@@ -165,16 +165,15 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
     );
 
-    final txListWidget = Container(
-      height: (MediaQuery.of(context).size.height -
-              appBar.preferredSize.height -
-              MediaQuery.of(context).padding.top) *
-          0.6,
-      child: TransactionList(
-        transactions: _userTransactions,
-        deleteTx: _deleteTransaction,
-      ),
-    );
+    _customMediaQuery(value, widget) {
+      return Container(
+        height: (MediaQuery.of(context).size.height -
+                appBar.preferredSize.height -
+                MediaQuery.of(context).padding.top) *
+            value,
+        child: widget,
+      );
+    }
 
     return Scaffold(
       appBar: appBar,
@@ -198,24 +197,31 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             if (!isLandscape)
-              Container(
-                height: (MediaQuery.of(context).size.height -
-                        appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
-                    0.3,
-                child: Chart(_recentTransactions),
+              _customMediaQuery(
+                0.3,
+                Chart(_recentTransactions),
               ),
-            if (!isLandscape) txListWidget,
+            if (!isLandscape)
+              _customMediaQuery(
+                0.6,
+                TransactionList(
+                  transactions: _userTransactions,
+                  deleteTx: _deleteTransaction,
+                ),
+              ),
             if (isLandscape)
               _showChart
-                  ? Container(
-                      height: (MediaQuery.of(context).size.height -
-                              appBar.preferredSize.height -
-                              MediaQuery.of(context).padding.top) *
-                          0.7,
-                      child: Chart(_recentTransactions),
+                  ? _customMediaQuery(
+                      0.7,
+                      Chart(_recentTransactions),
                     )
-                  : txListWidget,
+                  : _customMediaQuery(
+                      0.6,
+                      TransactionList(
+                        transactions: _userTransactions,
+                        deleteTx: _deleteTransaction,
+                      ),
+                    ),
           ],
         ),
       ),
